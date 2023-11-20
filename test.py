@@ -11,3 +11,6 @@ xNext=np.where(xNext > -L/2, 0,xNext)
 print (xNext)
 #xNext=np.where(xNext > L/2, xNext, L-xNext)
 
+matrix0= np.array([[0,1][2,3]])
+print(matrix0)
+matrix0.resize((3,3))
