@@ -1,4 +1,5 @@
 import numpy as np 
+
 a = np.arange(10)
 a=np.where(a < 10/2, a, a-20).copy()
 a= np.where(a > 2, a, a*1.33)
@@ -14,3 +15,6 @@ print (xNext)
 matrix0= np.array([[0,1][2,3]])
 print(matrix0)
 matrix0.resize((3,3))
+v=np.array([1,2 ,3])
+
+print(np.linalg.inv(v))
