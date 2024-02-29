@@ -1,20 +1,37 @@
-import numpy as np 
+import tkinter as tk
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import numpy as np
 
-a = np.arange(10)
-a=np.where(a < 10/2, a, a-20).copy()
-a= np.where(a > 2, a, a*1.33)
+def update_plot():
+    mean = slider_mean.get()
+    std_dev = slider_std_dev.get()
 
-L=4
-xNext =np.arange(10)-4
-print(xNext)
+    x = np.linspace(-10, 10, 1000)
+    y = (1 / (std_dev * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((x - mean) / std_dev) ** 2)
 
-xNext=np.where(xNext > -L/2, 0,xNext)
-print (xNext)
-#xNext=np.where(xNext > L/2, xNext, L-xNext)
+    ax.clear()
+    ax.plot(x, y, linewidth=2, color='blue')
+    ax.set_title('Gaussian Bell Curve')
+    ax.set_xlabel('X-axis')
+    ax.set_ylabel('Y-axis')
+    canvas.draw()
 
-matrix0= np.array([[0,1][2,3]])
-print(matrix0)
-matrix0.resize((3,3))
-v=np.array([1,2 ,3])
+root = tk.Tk()
+root.title("Gaussian Bell Curve Generator")
 
-print(np.linalg.inv(v))
+fig, ax = plt.subplots()
+canvas = FigureCanvasTkAgg(fig, master=root)
+canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+
+slider_mean = tk.Scale(root, from_=-5, to=5, resolution=0.1, label="Mean",
+                        orient=tk.HORIZONTAL, command=update_plot)
+slider_mean.pack()
+
+slider_std_dev = tk.Scale(root, from_=0.1, to=5, resolution=0.1, label="Standard Deviation",
+                          orient=tk.HORIZONTAL, command=update_plot)
+slider_std_dev.pack()
+
+update_plot()
+
+root.mainloop()
